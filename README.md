@@ -18,6 +18,14 @@ python -m src.score --model artifacts/model.joblib --input data/new_claims.csv -
 streamlit run app.py
 ```
 
+### Docker
+```bash
+docker build -t claims-severity .
+docker run -p 8501:8501 claims-severity
+```
+The image ships the Streamlit dashboard by default; override the container CMD to run `python -m src.train` or `python -m src.score` for batch jobs. Mount `data/` and `artifacts/` as volumes to persist inputs and trained models outside the container.
+
+
 The repository does not bundle Kaggle data. Download the Allstate Claims Severity dataset from Kaggle, place `train.csv` in `data/`, and accept its license/terms. A synthetic smoke-test generator is included in `src/data.py`.
 
 ## ML concepts
