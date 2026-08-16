@@ -52,3 +52,44 @@ def make_smoke_sample(n: int = 20, seed: int = 0) -> pd.DataFrame:
     """Return a small synthetic sample (no target column) for manual/CLI testing."""
     df = make_smoke_data(n=n, seed=seed)
     return df.drop(columns=['loss'])
+
+
+
+def _cli():
+    """Command-line entrypoint: generate synthetic train/smoke-sample CSVs.
+
+    Usage:
+        python -m src.data --out-dir data --n-train 500 --n-sample 20
+
+    Writes two files under --out-dir:
+      - train.csv (or --train-name): synthetic training data with target column
+      - smoke_sample.csv (or --sample-name): small sample with no target column,
+        suitable for src.score smoke tests.
+    """
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Generate synthetic claims data for local runs and CI smoke tests.")
+    parser.add_argument("--out-dir", default="data", help="Directory to write CSVs into (default: data)")
+    parser.add_argument("--train-name", default="smoke_train.csv", help="Filename for the synthetic training CSV")
+    parser.add_argument("--sample-name", default="smoke_sample.csv", help="Filename for the synthetic sample CSV (no target)")
+    parser.add_argument("--n-train", type=int, default=500, help="Number of rows for the training dataset")
+    parser.add_argument("--n-sample", type=int, default=20, help="Number of rows for the sample dataset")
+    parser.add_argument("--seed", type=int, default=42, help="Random seed")
+    args = parser.parse_args()
+
+    out_dir = Path(args.out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    train_df = make_smoke_data(n=args.n_train, seed=args.seed)
+    train_path = out_dir / args.train_name
+    train_df.to_csv(train_path, index=False)
+    print(f"Wrote synthetic training data: {train_path} ({len(train_df)} rows)")
+
+    sample_df = make_smoke_sample(n=args.n_sample, seed=args.seed)
+    sample_path = out_dir / args.sample_name
+    sample_df.to_csv(sample_path, index=False)
+    print(f"Wrote synthetic smoke sample: {sample_path} ({len(sample_df)} rows)")
+
+
+if __name__ == "__main__":
+    _cli()
