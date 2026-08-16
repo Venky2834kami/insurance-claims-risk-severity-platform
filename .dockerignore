@@ -1,0 +1,17 @@
+.git
+.github
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+mlruns/
+artifacts/
+data/*.csv
+!data/smoke_sample.csv
+notebooks/
+docs/
+tests/
+.venv/
+venv/
+*.egg-info/
+.DS_Store
