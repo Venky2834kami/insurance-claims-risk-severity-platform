@@ -29,4 +29,5 @@ jobs:
       - run: pip install -r requirements.txt
       - run: pip install -e .
       - run: python -m src.train
+      - run: python -m src.data --out-dir data --n-sample 20
       - run: python -m src.score --input data/smoke_sample.csv --output /tmp/preds.csv
