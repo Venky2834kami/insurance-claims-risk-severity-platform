@@ -1,0 +1,10 @@
+target: loss
+random_state: 42
+test_size: 0.2
+models:
+  - baseline_mean
+  - hist_gradient_boosting
+  - random_forest
+mlflow:
+  tracking_uri: mlruns
+  experiment: claims-severity

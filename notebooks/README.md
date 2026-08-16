@@ -1,0 +1,1 @@
+Suggested notebook flow: load data; inspect missingness and cardinality; plot log-loss distribution; compare train/test distributions; examine categorical frequency; document leakage checks; run `src.train`; inspect `artifacts/metrics.csv`.
