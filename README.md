@@ -29,6 +29,7 @@ built in.
 - An optional Streamlit dashboard (`app.py`) and Docker packaging.
 - CI on every push: linting, full pytest suite with coverage, and a
   synthetic-data smoke-train job (`.github/workflows/ci.yml`).
+- Exploratory data analysis notebook (`notebooks/eda.ipynb`) covering missingness, cardinality, target distribution (raw vs. log1p), train/test comparison, and leakage checks — runs on synthetic data out of the box.
 
 ## Repository layout
 
